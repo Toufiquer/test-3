@@ -3,13 +3,36 @@ import React, { useState } from "react";
 import googleIcon from "./icon/google.png";
 import facebookIcon from "./icon/facebook.png";
 import githubIcon from "./icon/github.png";
+import auth from "../firebase";
+import { useSignInWithGoogle } from "react-firebase-hooks/auth";
+import Loading from "./Loading";
+import { toast } from "react-toastify";
+const customId = "custom toast id";
 const Authentication = () => {
   const [toggle, setToggle] = useState(false);
+  const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
+  if (loading) {
+    return <Loading></Loading>;
+  }
+  if (error) {
+    toast.error(error.message, {
+      toastId: customId,
+    });
+  }
+  if (user) {
+    toast.success("Successfully Login", {
+      toastId: customId,
+    });
+    console.log(user);
+  }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
   return (
     <div className={`bg-blue-300 min-h-screen w-full p-4`}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
         <div className="container  mx-auto">
-          <form className="flex flex-col gap-2 w-[480px] mx-auto mt-4 border-2 border-solid border-blue-600 rounded p-4">
+          <form onClick={handleSubmit} className="flex flex-col gap-2 w-[480px] mx-auto mt-4 border-2 border-solid border-blue-600 rounded p-4">
             <h2 className={`font-thin text-6xl my-4 text-center`}>{toggle ? <span>Please Register</span> : <span>Please Log In</span>}</h2>
             <div className="w-full h-[1px] bg-blue-600 mb-2 mt-[-5px]"></div>
             <div>
@@ -58,7 +81,7 @@ const Authentication = () => {
           <h2 className={`font-thin text-4xl text-center`}>Or Continue With</h2>
           <div className="w-[480px] mx-auto h-[1px] bg-blue-600 mb-2"></div>
           <div className="flex items-center justify-center flex-col w-[480px] mx-auto gap-y-4">
-            <Button type="submit" className={`w-full`}>
+            <Button onClick={() => signInWithGoogle()} type="submit" className={`w-full`}>
               {" "}
               <span className={`h-6 w-6 mx-2`}>
                 {" "}

@@ -1,16 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import auth from "../firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { useAuthState, useSignOut } from "react-firebase-hooks/auth";
 import Loading from "./Loading";
 import { toast } from "react-toastify";
 const customId = "custom-id-for-this-toast";
 const Navbar = () => {
   const [user, loading, error] = useAuthState(auth);
-  if (loading) {
+  const [signOut, loadingA, errorA] = useSignOut(auth);
+  if (loading || loadingA) {
     return <Loading></Loading>;
   }
-  if (error) {
+  if (error || errorA) {
     toast.error(error.message, {
       toastId: customId,
     });
@@ -33,7 +34,22 @@ const Navbar = () => {
                 <Link to="/private">Private</Link>
               </li>
               <li className={`${customCss}`}>
-                <Link to="/authentication">{user ? "Log Out" : "Log In"}</Link>
+                <Link to="/authentication">
+                  {user ? (
+                    <span
+                      onClick={() => {
+                        signOut();
+                        toast("Successfully Log Out", {
+                          toastId: customId,
+                        });
+                      }}
+                    >
+                      Log Out
+                    </span>
+                  ) : (
+                    "Log In"
+                  )}
+                </Link>
               </li>
             </ul>
           </nav>
