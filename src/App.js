@@ -4,11 +4,11 @@ import About from "./components/About";
 import Authentication from "./components/Authentication";
 import CompoWithTitle from "./components/CompoWithTitle";
 import Home from "./components/Home";
-import Loading from "./components/Loading";
 import Navbar from "./components/Navbar";
 import Private from "./components/Private";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import NotFound from "./NotFound";
 function App() {
   return (
     <div className="App">
@@ -58,7 +58,7 @@ function App() {
           path="*"
           element={
             <CompoWithTitle title={"Not Found - Toufiquer Web App"}>
-              <Loading></Loading>
+              <NotFound></NotFound>
             </CompoWithTitle>
           }
         ></Route>
