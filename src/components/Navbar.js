@@ -4,6 +4,7 @@ import auth from "../firebase";
 import { useAuthState, useSignOut } from "react-firebase-hooks/auth";
 import Loading from "./Loading";
 import { toast } from "react-toastify";
+import CustomLink from "./CustomLink";
 const customId = "custom-id-for-this-toast";
 const Navbar = () => {
   const [user, loading, error] = useAuthState(auth);
@@ -25,16 +26,16 @@ const Navbar = () => {
           <nav>
             <ul className={`flex items-center justify-center`}>
               <li className={`${customCss}`}>
-                <Link to="/">Home</Link>
+                <CustomLink to="/">Home</CustomLink>
               </li>
               <li className={`${customCss}`}>
-                <Link to="/about">About</Link>
+                <CustomLink to="/about">About</CustomLink>
               </li>
               <li className={`${customCss}`}>
-                <Link to="/private">Private</Link>
+                <CustomLink to="/private">Private</CustomLink>
               </li>
               <li className={`${customCss}`}>
-                <Link to="/authentication">
+                <CustomLink to="/authentication">
                   {user ? (
                     <span
                       onClick={() => {
@@ -49,7 +50,7 @@ const Navbar = () => {
                   ) : (
                     "Log In"
                   )}
-                </Link>
+                </CustomLink>
               </li>
             </ul>
           </nav>
