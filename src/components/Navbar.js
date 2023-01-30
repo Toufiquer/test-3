@@ -1,11 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import auth from "../firebase";
 import { useAuthState, useSignOut } from "react-firebase-hooks/auth";
 import Loading from "./Loading";
 import { toast } from "react-toastify";
 import CustomLink from "./CustomLink";
-const customId = "custom-id-for-this-toast";
+const customId = "custom-id-for-navbar";
 const Navbar = () => {
   const [user, loading, error] = useAuthState(auth);
   const [signOut, loadingA, errorA] = useSignOut(auth);

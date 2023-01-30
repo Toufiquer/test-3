@@ -8,7 +8,10 @@ import { useAuthState, useCreateUserWithEmailAndPassword, useSignInWithEmailAndP
 import Loading from "./Loading";
 import { toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
-const customId = "custom toast id";
+const customId = "custom id for authentication";
+const idPasswordDoesnotMatch = "Password Doesn't Match";
+const idSuccess = "Successfully Login";
+const idCreateAccount = "Successfully Create Account";
 const Authentication = () => {
   const [toggle, setToggle] = useState(false);
   const [email, setEmail] = useState("");
@@ -34,24 +37,34 @@ const Authentication = () => {
       toastId: customId,
     });
   }
-  if (user1 || user2 || user3) {
+  if (user1 || user3) {
     toast.success("Successfully Login", {
-      toastId: customId,
+      toastId: idSuccess,
+    });
+  }
+  if (user2) {
+    toast.success("Successfully Create Account", {
+      toastId: idCreateAccount,
     });
   }
   const handleSubmit = (e) => {
+    setEmail("");
+    setPassword("");
+    setPassword2("");
     e.preventDefault();
     if (toggle) {
       if (password !== password2) {
         toast.warning("Password Doesn't Match", {
-          toastId: customId,
+          toastId: idPasswordDoesnotMatch,
         });
-      } else {
-        toggle && createUserWithEmailAndPassword(email, password);
+      } else if (email.length >= 1 && password.length >= 6) {
+        createUserWithEmailAndPassword(email, password);
       }
+    } else {
+      email.length >= 1 && password.length >= 6 && signInWithEmailAndPassword(email, password);
     }
-    !toggle && signInWithEmailAndPassword(email, password);
   };
+  console.log(user2);
   return (
     <div className={`bg-blue-300 min-h-screen w-full p-4`}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-2">

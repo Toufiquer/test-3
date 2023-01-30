@@ -4,7 +4,7 @@ import { Navigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import auth from "../firebase";
 import Loading from "./Loading";
-const customId = "toast id";
+const customId = "Require Auth Error";
 const RequireAuth = ({ children }) => {
   let location = useLocation();
   const [user, loading, error] = useAuthState(auth);
