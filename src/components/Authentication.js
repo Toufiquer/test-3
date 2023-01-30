@@ -7,7 +7,7 @@ import auth from "../firebase";
 import { useAuthState, useCreateUserWithEmailAndPassword, useSignInWithEmailAndPassword, useSignInWithGoogle } from "react-firebase-hooks/auth";
 import Loading from "./Loading";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 const customId = "custom toast id";
 const Authentication = () => {
   const [toggle, setToggle] = useState(false);
@@ -19,9 +19,11 @@ const Authentication = () => {
   const [createUserWithEmailAndPassword, user2, loading2, error2] = useCreateUserWithEmailAndPassword(auth);
   const [signInWithEmailAndPassword, user3, loading3, error3] = useSignInWithEmailAndPassword(auth);
   const navigate = useNavigate();
+  let location = useLocation();
+  let from = location.state?.from?.pathname || "/";
   useEffect(() => {
     if (user?.uid) {
-      navigate("/");
+      navigate(from, { replace: true });
     }
   });
   if (loading || loading1 || loading2 || loading3) {

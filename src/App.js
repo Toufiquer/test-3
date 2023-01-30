@@ -9,6 +9,7 @@ import Private from "./components/Private";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import NotFound from "./NotFound";
+import RequireAuth from "./components/RequireAuth";
 function App() {
   return (
     <div className="App">
@@ -42,7 +43,9 @@ function App() {
           path="/private"
           element={
             <CompoWithTitle title={"Private - Toufiquer Web App"}>
-              <Private></Private>
+              <RequireAuth>
+                <Private></Private>
+              </RequireAuth>
             </CompoWithTitle>
           }
         ></Route>
